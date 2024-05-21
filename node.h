@@ -14,6 +14,7 @@ typedef struct node {
 } BTreeNode;
 
 BTreeNode *create_empty_node(size_t order, BTreeNode *parent);
-void dump_node(BTreeNode*);
+void append_empty_node(size_t order, BTreeNode *parent);
+void dump_node(BTreeNode*, size_t depth);
 
 #endif // NODE_H_

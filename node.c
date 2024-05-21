@@ -28,14 +28,20 @@ void append_empty_node(size_t order, BTreeNode *parent) {
 	parent->child_count += 1;
 }
 
-void dump_node(BTreeNode *node) {
+void dump_node(BTreeNode *node, size_t depth) {
+	char prefix[depth+1];
+	for (int i = 0; i < depth; ++i) {
+		prefix[i] = ' ';
+	}
+	prefix[depth] = '\0';
+
 	if (node == NULL) {
-		printf("(not existing)\n");
+		printf("%s(not existing)\n", prefix);
 		return;
 	}
 
 	if (node->child_count == 0) {
-		printf("LEAF(");
+		printf("%sLEAF(", prefix);
 		for (size_t i = 0; i < node->key_count; ++i) {
 			printf("%lu", node->keys[i]);
 			if (i != node->key_count - 1) {
@@ -46,7 +52,7 @@ void dump_node(BTreeNode *node) {
 		return;
 	}
 
-	printf("NODE(");
+	printf("%sNODE(", prefix);
 	for (size_t i = 0; i < node->key_count; ++i) {
 		printf("%lu", node->keys[i]);
 		if (i != node->key_count - 1) {
@@ -56,8 +62,8 @@ void dump_node(BTreeNode *node) {
 	printf(") #%lu {\n", node->child_count);
 
 	for (size_t i = 0; i < node->child_count; ++i) {
-		dump_node(node->children[i]);
+		dump_node(node->children[i], depth + 1);
 	}
 	
-	printf("}\n");
+	printf("%s}\n", prefix);
 }
