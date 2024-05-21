@@ -3,6 +3,7 @@
 
 #include "btree.h"
 #include "node.h"
+#include "binary_search.h"
 
 BTree btree_create(size_t order) {
 	BTreeNode *root = create_empty_node(NULL, order);
@@ -37,13 +38,32 @@ void insert_key_into_subtree(BTreeNode *node, BTreeKey key, size_t order) {
 		append_node(left, node, order);
 		append_node(right, node, order);
 	}
-
-
-
 }
 
 void btree_insert(BTree *btree, BTreeKey key) {
 	insert_key_into_subtree(btree->root, key, btree->order);
+}
+
+bool subtree_contains_key(BTreeNode *node, BTreeKey key) {
+	if (node->key_count == 0) {
+		return false;
+	}
+
+	size_t index = search_key_index(node->keys, key, 0, node->key_count - 1);
+
+	if (node->keys[index] == key) {
+		return true;
+	}
+
+	if (index < node->child_count) {
+		return subtree_contains_key(node->children[index], key);
+	}
+
+	return false;
+}
+
+bool btree_contains_key(BTree *btree, BTreeKey key) {
+	return subtree_contains_key(btree->root, key);
 }
 
 void btree_dump(BTree *btree) {
