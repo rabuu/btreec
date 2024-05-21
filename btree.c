@@ -8,8 +8,11 @@ BTreeNode *create_empty_node(size_t order, BTreeNode *parent) {
 	BTreeNode *new = (BTreeNode*) malloc(sizeof(BTreeNode));
 	new->parent = parent;
 
-	BTreeNode **children = calloc(order, sizeof(BTreeNode*));
+	size_t *keys = malloc((order - 1) * sizeof(size_t));
+	BTreeNode **children = malloc(order * sizeof(BTreeNode*));
+
 	new->count = 0;
+	new->keys = keys;
 	new->children = children;
 
 	return new;

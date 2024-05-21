@@ -2,13 +2,12 @@
 #define BTREE_H_
 
 #include <stddef.h>
-#include <stdint.h>
 
 typedef struct node {
 	struct node *parent;
 
 	size_t count;
-	int32_t *values;
+	size_t *keys;
 	struct node **children;
 } BTreeNode;
 
