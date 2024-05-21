@@ -3,11 +3,15 @@
 
 #include <stddef.h>
 
+typedef size_t BTreeKey;
+
 typedef struct node {
 	struct node *parent;
 
-	size_t count;
-	size_t *keys;
+	size_t key_count;
+	BTreeKey *keys;
+
+	size_t child_count;
 	struct node **children;
 } BTreeNode;
 
@@ -18,7 +22,7 @@ typedef struct {
 
 
 BTree btree_create(size_t);
-void btree_insert_empty(BTree*);
+void btree_insert(BTree*, BTreeKey);
 void btree_dump(BTree*);
 
 #endif // BTREE_H_

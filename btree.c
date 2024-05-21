@@ -8,23 +8,24 @@ BTreeNode *create_empty_node(size_t order, BTreeNode *parent) {
 	BTreeNode *new = (BTreeNode*) malloc(sizeof(BTreeNode));
 	new->parent = parent;
 
-	size_t *keys = malloc((order - 1) * sizeof(size_t));
+	size_t *keys = malloc((order - 1) * sizeof(BTreeKey));
 	BTreeNode **children = malloc(order * sizeof(BTreeNode*));
 
-	new->count = 0;
+	new->key_count = 0;
 	new->keys = keys;
+	new->child_count = 0;
 	new->children = children;
 
 	return new;
 }
 
 void append_empty_node(size_t order, BTreeNode *parent) {
-	assert(parent->count < order && "Parent node is already full");
+	assert(parent->child_count < order && "Parent node is already full");
 
 	BTreeNode *child = create_empty_node(order, parent);
 
-	parent->children[parent->count] = child;
-	parent->count += 1;
+	parent->children[parent->child_count] = child;
+	parent->child_count += 1;
 }
 
 void dump_node(BTreeNode *node) {
@@ -33,14 +34,28 @@ void dump_node(BTreeNode *node) {
 		return;
 	}
 
-	if (node->count == 0) {
-		printf("NODE\n");
+	if (node->child_count == 0) {
+		printf("LEAF(");
+		for (size_t i = 0; i < node->key_count; ++i) {
+			printf("%lu", node->keys[i]);
+			if (i != node->key_count - 1) {
+				printf(",");
+			}
+		}
+		printf(");\n");
 		return;
 	}
 
-	printf("NODE(%lu) {\n", node->count);
+	printf("NODE(");
+	for (size_t i = 0; i < node->key_count; ++i) {
+		printf("%lu", node->keys[i]);
+		if (i != node->key_count - 1) {
+			printf(",");
+		}
+	}
+	printf(") #%lu {\n", node->child_count);
 
-	for (size_t i = 0; i < node->count; i++) {
+	for (size_t i = 0; i < node->child_count; ++i) {
 		dump_node(node->children[i]);
 	}
 	
@@ -55,8 +70,8 @@ BTree btree_create(size_t order) {
 	return tree;
 }
 
-void btree_insert_empty(BTree *btree) {
-	append_empty_node(btree->order, btree->root);
+void btree_insert(BTree *btree, BTreeKey key) {
+	assert(0 && "Not yet implemented");
 }
 
 void btree_dump(BTree *btree) {
