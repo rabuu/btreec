@@ -5,7 +5,7 @@
 #include "node.h"
 
 typedef struct {
-	size_t order;
+	const size_t order;
 	BTreeNode *root;
 } BTree;
 
