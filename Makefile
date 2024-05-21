@@ -1,11 +1,13 @@
+CFLAGS=-Wall -g
+
 btreec: main.o btree.o
-	cc -o btreec main.o btree.o
+	$(CC) $(CFLAGS) -o btreec main.o btree.o
 
 main.o: main.c
-	cc -c main.c
+	$(CC) $(CFLAGS) -c main.c
 
 btree.o: btree.c btree.h
-	cc -c btree.c
+	$(CC) $(CFLAGS) -c btree.c
 
 .PHONY: clean
 clean:
