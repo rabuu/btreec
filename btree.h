@@ -13,7 +13,7 @@ typedef struct node {
 } BTreeNode;
 
 typedef struct {
-	size_t B;
+	size_t order;
 	BTreeNode *root;
 } BTree;
 

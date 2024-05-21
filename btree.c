@@ -10,8 +10,8 @@ BTreeNode *create_node(BTreeNode *parent) {
 	return new;
 }
 
-BTree btree_create(size_t B) {
+BTree btree_create(size_t order) {
 	BTreeNode *root = create_node(NULL);
-	BTree tree = { .B = B, .root = root };
+	BTree tree = { order, root };
 	return tree;
 }
