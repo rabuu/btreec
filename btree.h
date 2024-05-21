@@ -19,5 +19,7 @@ typedef struct {
 
 
 BTree btree_create(size_t);
+void btree_insert_empty(BTree*);
+void btree_dump(BTree*);
 
 #endif // BTREE_H_
