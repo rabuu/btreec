@@ -23,13 +23,17 @@ bool node_is_leaf(BTreeNode *node) {
 	return node->child_count == 0;
 }
 
-void append_empty_node(size_t order, BTreeNode *parent) {
+void append_node(BTreeNode *child, BTreeNode *parent, size_t order) {
+	assert(parent->child_count < order && "Parent node is already full");
+	parent->children[parent->child_count] = child;
+	parent->child_count += 1;
+}
+
+void append_empty_node(BTreeNode *parent, size_t order) {
 	assert(parent->child_count < order && "Parent node is already full");
 
 	BTreeNode *child = create_empty_node(order, parent);
-
-	parent->children[parent->child_count] = child;
-	parent->child_count += 1;
+	append_node(child, parent, order);
 }
 
 size_t search_new_key_index(BTreeKey *keys, BTreeKey new_key, size_t start, size_t end) {
