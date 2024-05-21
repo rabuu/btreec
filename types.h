@@ -2,6 +2,7 @@
 #define TYPES_H_
 
 #include <stddef.h>
+#include <stdbool.h>
 
 typedef size_t BTreeKey;
 

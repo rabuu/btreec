@@ -15,6 +15,8 @@ typedef struct node {
 
 BTreeNode *create_empty_node(size_t order, BTreeNode *parent);
 void append_empty_node(size_t order, BTreeNode *parent);
+bool node_is_leaf(BTreeNode*);
+void add_key_to_node(BTreeNode*, BTreeKey);
 void dump_node(BTreeNode*, size_t depth);
 
 #endif // NODE_H_
