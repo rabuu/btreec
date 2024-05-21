@@ -3,6 +3,7 @@
 #include <assert.h>
 
 #include "node.h"
+#include "binary_search.h"
 
 BTreeNode *create_empty_node(BTreeNode *parent, size_t order) {
 	BTreeNode *new = (BTreeNode*) malloc(sizeof(BTreeNode));
@@ -36,30 +37,6 @@ void append_empty_node(BTreeNode *parent, size_t order) {
 	append_node(child, parent, order);
 }
 
-size_t search_new_key_index(BTreeKey *keys, BTreeKey new_key, size_t start, size_t end) {
-	assert(start <= end);
-
-	if (new_key == 0) {
-		return 0;
-	}
-
-	if (start == end) {
-		return (new_key > keys[start]) ? (start + 1) : start;
-	}
-
-	size_t mid = (end + start) / 2;
-
-	if (new_key > keys[mid] && new_key < keys[mid + 1]) {
-		return mid + 1;
-	}
-
-	if (new_key > keys[mid]) {
-		return search_new_key_index(keys, new_key, mid + 1, end);
-	} else {
-		return search_new_key_index(keys, new_key, start, mid - 1);
-	}
-}
-
 void add_key_to_node(BTreeNode *node, BTreeKey key) {
 	if (node->key_count == 0) {
 		node->keys[0] = key;
@@ -67,7 +44,7 @@ void add_key_to_node(BTreeNode *node, BTreeKey key) {
 		return;
 	}
 
-	size_t index = search_new_key_index(node->keys, key, 0, node->key_count - 1);
+	size_t index = search_key_index(node->keys, key, 0, node->key_count - 1);
 	if (key == node->keys[index]) {
 		printf("Key %lu does already exist\n", key);
 		return;
