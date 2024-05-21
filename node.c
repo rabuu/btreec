@@ -4,7 +4,7 @@
 
 #include "node.h"
 
-BTreeNode *create_empty_node(size_t order, BTreeNode *parent) {
+BTreeNode *create_empty_node(BTreeNode *parent, size_t order) {
 	BTreeNode *new = (BTreeNode*) malloc(sizeof(BTreeNode));
 	new->parent = parent;
 
@@ -32,7 +32,7 @@ void append_node(BTreeNode *child, BTreeNode *parent, size_t order) {
 void append_empty_node(BTreeNode *parent, size_t order) {
 	assert(parent->child_count < order && "Parent node is already full");
 
-	BTreeNode *child = create_empty_node(order, parent);
+	BTreeNode *child = create_empty_node(parent, order);
 	append_node(child, parent, order);
 }
 

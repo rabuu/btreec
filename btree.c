@@ -5,7 +5,7 @@
 #include "node.h"
 
 BTree btree_create(size_t order) {
-	BTreeNode *root = create_empty_node(order, NULL);
+	BTreeNode *root = create_empty_node(NULL, order);
 
 	BTree tree = { order, root };
 	return tree;
@@ -21,12 +21,12 @@ void insert_key_into_subtree(BTreeNode *node, BTreeKey key, size_t order) {
 		add_key_to_node(node, key);
 		const size_t mid = node->key_count / 2;
 
-		BTreeNode *left = create_empty_node(order, node);
+		BTreeNode *left = create_empty_node(node, order);
 		for (size_t i = 0; i < mid; ++i) {
 			insert_key_into_subtree(left, node->keys[i], order);
 		}
 
-		BTreeNode *right = create_empty_node(order, node);
+		BTreeNode *right = create_empty_node(node, order);
 		for (size_t i = mid + 1; i < node->key_count; ++i) {
 			insert_key_into_subtree(right, node->keys[i], order);
 		}

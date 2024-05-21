@@ -13,11 +13,11 @@ typedef struct node {
 	struct node **children;
 } BTreeNode;
 
-BTreeNode *create_empty_node(size_t order, BTreeNode *parent);
+BTreeNode *create_empty_node(BTreeNode *parent, size_t order);
 void append_node(BTreeNode *child, BTreeNode *parent, size_t order);
 void append_empty_node(BTreeNode *parent, size_t order);
-bool node_is_leaf(BTreeNode*);
-void add_key_to_node(BTreeNode*, BTreeKey);
-void dump_node(BTreeNode*, size_t depth);
+bool node_is_leaf(BTreeNode *node);
+void add_key_to_node(BTreeNode *node, BTreeKey key);
+void dump_node(BTreeNode *node, size_t depth);
 
 #endif // NODE_H_

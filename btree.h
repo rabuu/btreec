@@ -9,8 +9,8 @@ typedef struct {
 	BTreeNode *root;
 } BTree;
 
-BTree btree_create(size_t);
-void btree_insert(BTree*, BTreeKey);
-void btree_dump(BTree*);
+BTree btree_create(size_t order);
+void btree_insert(BTree *btree, BTreeKey key);
+void btree_dump(BTree *btree);
 
 #endif // BTREE_H_
